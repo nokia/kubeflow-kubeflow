@@ -240,7 +240,7 @@ func (r *NotebookReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 		if err != nil {
 			return ctrl.Result{}, err
 		}
-	} else if podFound && !culler.StopAnnotationIsSet(instance.ObjectMeta) {
+	} else if podFound && !culler.StopAnnotationIsSet(instance.ObjectMeta) && culler.NotebookNeedsCulling(instance.ObjectMeta) {
 		// The Pod is either too fresh, or the idle time has passed and it has
 		// received traffic. In this case we will be periodically checking if
 		// it needs culling.
